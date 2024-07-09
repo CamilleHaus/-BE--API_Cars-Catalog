@@ -1,6 +1,8 @@
+import "reflect-metadata";
 import { injectable } from "tsyringe";
 import { TCarSchema, TCreateCar, TUpdateCarBody } from "../schemas/cars.schemas";
 import { prisma } from "../database/prisma";
+
 
 @injectable()
 export class CarServices {

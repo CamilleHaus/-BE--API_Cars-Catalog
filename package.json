@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsnd --respawn src/server.ts",
     "migrate:dev": "dotenv -e .env -- npx prisma migrate dev",
-    "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev"
+    "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev",
+    "test:unit": "dotenv -e .env.test -- jest --verbose --runInBand --config jest.config.unit.ts",
+    "test:integration": "dotenv -e .env.test -- jest --verbose --runInBand --config jest.config.integration.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "prisma": "^5.16.1",
     "reflect-metadata": "^0.2.2",
     "supertest": "^7.0.0",
+    "ts-jest": "^29.2.0",
     "ts-node-dev": "^2.0.0",
     "tsyringe": "^4.8.0",
     "typescript": "^5.5.3"

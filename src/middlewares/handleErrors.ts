@@ -5,11 +5,12 @@ import { AppError } from "../erros/AppError";
 export class HandleErros {
     static execute(error: Error, req: Request, res: Response, next: NextFunction) {
         if (error instanceof AppError) {
-            return res.status(error.statusCode).json(error.message)
+            return res.status(error.statusCode).json({ message: error.message })
         }
 
         if (error instanceof ZodError) {
-            return res.status(422).json(error)
+            const messageError = { errors: error.issues }
+            return res.status(400).json(messageError)
         }
 
         console.log(error)

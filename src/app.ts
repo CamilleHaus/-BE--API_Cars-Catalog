@@ -1,8 +1,8 @@
-import express, { json } from "express";
 import "reflect-metadata";
-import { carRouter } from "./routes/car.routes";
-import { HandleErros } from "./middlewares/handleErrors.middleware";
 import "express-async-errors";
+import express, { json } from "express";
+import { carRouter } from "./routes/car.routes";
+import { HandleErros } from "./middlewares/handleErrors";
 
 export const app = express();
 
