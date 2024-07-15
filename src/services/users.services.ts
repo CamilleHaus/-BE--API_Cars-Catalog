@@ -11,7 +11,7 @@ export class UserServices {
     async createUser(body: TCreateUser): Promise<TReturn> {
 
         const hashedPassowrd = await bcrypt.hash(body.password, 10)
-
+ 
         const newUser = {
             ...body,
             password: hashedPassowrd
