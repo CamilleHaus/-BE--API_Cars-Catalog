@@ -14,10 +14,22 @@ datasource db {
 }
 
 model Car {
-  id String @id @default(uuid())
-  name String
+  id          String  @id @default(uuid())
+  name        String
   description String?
-  brand String
-  year Int
-  km Int
+  brand       String
+  year        Int
+  km          Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+
+  Car Car[]
 }

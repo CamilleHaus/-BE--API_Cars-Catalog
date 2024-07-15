@@ -6,10 +6,11 @@ export const carSchema = z.object({
     description: z.string().nullish(),
     brand: z.string().min(1),
     year: z.number().positive(),
-    km: z.number().positive()
+    km: z.number().positive(),
+    userId: z.string()
 });
 
-export const createCarSchema = carSchema.omit({id: true})
+export const createCarSchema = carSchema.omit({id: true, userId: true})
 
 export type TCarSchema = z.infer<typeof carSchema>
 
