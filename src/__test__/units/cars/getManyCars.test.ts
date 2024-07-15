@@ -1,6 +1,6 @@
-import { CarServices } from "../../services/cars.services"
-import { carListMock } from "../__mock__/carMocks";
-import { prismaMock } from "../__mock__/prisma";
+import { CarServices } from "../../../services/cars.services"
+import { carListMock } from "../../__mock__/carMocks";
+import { prismaMock } from "../../__mock__/prisma";
 
 describe("Unit test: Get all car", () => {
     

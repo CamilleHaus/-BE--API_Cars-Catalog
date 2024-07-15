@@ -1,6 +1,6 @@
-import { prisma } from "../../database/prisma";
-import { request } from "../../utils/request";
-import { carListMock } from "../__mock__/carMocks";
+import { prisma } from "../../../database/prisma";
+import { request } from "../../../utils/request";
+import { carListMock, userIdMock } from "../../__mock__/carMocks";
 
 describe("Integration test: Get All Cars", () => {
 

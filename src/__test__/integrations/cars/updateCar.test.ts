@@ -1,6 +1,6 @@
-import { prisma } from "../../database/prisma";
-import { request } from "../../utils/request";
-import { carCreateMock, incompleteCarMock, updateCarMock } from "../__mock__/carMocks";
+import { prisma } from "../../../database/prisma";
+import { request } from "../../../utils/request";
+import { carCreateMock, incompleteCarMock, updateCarMock } from "../../__mock__/carMocks";
 
 describe("Integration test: Update Car", () => {
 

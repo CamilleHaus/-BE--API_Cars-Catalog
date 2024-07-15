@@ -1,6 +1,6 @@
-import { prisma } from "../../database/prisma";
-import { request } from "../../utils/request";
-import { carCreateMock, incompleteCarMock } from "../__mock__/carMocks";
+import { prisma } from "../../../database/prisma";
+import { request } from "../../../utils/request";
+import { carCreateMock, incompleteCarMock } from "../../__mock__/carMocks";
 
 describe("Integration test: Create car", () => {
 
@@ -18,6 +18,7 @@ describe("Integration test: Create car", () => {
         expect(data.brand).toBe(carCreateMock.brand)
         expect(data.year).toBe(carCreateMock.year)
         expect(data.km).toBe(carCreateMock.km)
+        expect(data.userId).toBe(carCreateMock.userId)
 
     })
 

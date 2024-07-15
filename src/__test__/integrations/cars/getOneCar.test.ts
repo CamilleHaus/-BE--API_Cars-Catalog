@@ -1,6 +1,6 @@
-import { prisma } from "../../database/prisma";
-import { request } from "../../utils/request";
-import { carCreateMock } from "../__mock__/carMocks";
+import { prisma } from "../../../database/prisma";
+import { request } from "../../../utils/request";
+import { carCreateMock, userIdMock } from "../../__mock__/carMocks";
 
 describe("Integration test: Get One Car", () => {
 
@@ -9,7 +9,7 @@ describe("Integration test: Get One Car", () => {
     });
 
     test("Should be able to get one car successfully", async () => {
-        const newCar = await prisma.car.create({ data: carCreateMock})
+        const newCar = await prisma.car.create({ data: carCreateMock })
 
         const data = await request.get(`/cars/${newCar.id}`).expect(200).then((response) => response.body)
         
