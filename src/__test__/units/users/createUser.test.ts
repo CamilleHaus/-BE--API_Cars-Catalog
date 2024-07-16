@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { UserServices } from "../../../services/users.services";
 import { prismaMock } from "../../__mock__/prisma";
-import { createUserMock, userMock } from "../../__mock__/userMocks";
+import { createUserMock, returnUserBodyMock, userMock } from "../../__mock__/userMocks";
 import bcrypt from "bcrypt";
 
 describe("Unit test: Create a User", () => {
@@ -9,20 +9,25 @@ describe("Unit test: Create a User", () => {
     test("Should be able to create a user successfully", async () => {
         const userServices = new UserServices();
 
-        const hashedPassword = await bcrypt.hash(createUserMock.password, 10);
+        const completeUser = await userMock()
 
-        const returnedUserMock = {
-            ...userMock,
-            password: hashedPassword
-        };
-
-        prismaMock.user.create.mockResolvedValue(returnedUserMock);
+        prismaMock.user.create.mockResolvedValue(completeUser);
 
         const data = await userServices.createUser(createUserMock);
-        
-        const { password: _, ...expectedUserWithoutPassword } = returnedUserMock;
 
-        expect(data).toEqual(expectedUserWithoutPassword);
+        expect(data).toEqual(returnUserBodyMock);
+    })
+
+    test("Should throw an error when email is already registered", async () => {
+        const userServices = new UserServices();
+
+        const completeUser = await userMock()
+
+        prismaMock.user.findFirst.mockResolvedValue(completeUser);
+
+        const register = async () => await userServices.createUser(createUserMock);
+
+        expect(register()).rejects.toThrow("E-mail already registered")
     })
 });
 

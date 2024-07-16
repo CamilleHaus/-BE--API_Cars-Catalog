@@ -1,6 +1,6 @@
 import { prisma } from "../../../database/prisma";
 import { CarServices } from "../../../services/cars.services"
-import { carCreateMock, carMock, updateCarMock, userIdMock } from "../../__mock__/carMocks";
+import { carCreateMock, carMock, updateCarMock, userIdMock, userIdMockNonExisting } from "../../__mock__/carMocks";
 import { prismaMock } from "../../__mock__/prisma";
 
 describe("Unit test: Update car", () => {
@@ -8,11 +8,9 @@ describe("Unit test: Update car", () => {
     test("Should be able to update a car successfully", async () => {
         const carServices = new CarServices();
 
-        prismaMock.car.create.mockResolvedValue(carMock);
-        const createdCar = await carServices.createCar(carCreateMock, userIdMock)
+        prismaMock.car.findUnique.mockResolvedValue(carMock);
         
         const newCar = {...carMock, ...updateCarMock}
-        console.log(createdCar, "##### TESTE")
         
         prismaMock.car.update.mockResolvedValue(newCar)
         
@@ -24,11 +22,21 @@ describe("Unit test: Update car", () => {
     test("Should throw an error when Car is not found", async () => {
         const carServices = new CarServices();
 
-        prismaMock.car.findFirst.mockResolvedValue(carMock)
+        prismaMock.car.findFirst.mockResolvedValue(null)
 
         const update = async () => await carServices.updateCar(carMock.id, updateCarMock, userIdMock)
 
         expect(update()).rejects.toThrow("Car not found")
 
+    })
+
+    test("Should throw an error when user is not the owner of the car", async () => {
+        const carServices = new CarServices();
+
+        prismaMock.car.findUnique.mockResolvedValue(carMock);
+       
+        const update = async () => await carServices.updateCar(carMock.id, updateCarMock, userIdMockNonExisting)
+
+        expect(update()).rejects.toThrow("You are not the owner of this car")
     })
 });

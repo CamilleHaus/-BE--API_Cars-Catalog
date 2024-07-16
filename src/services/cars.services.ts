@@ -16,7 +16,7 @@ export class CarServices {
                 userId
             }
         })
-        console.log(newCar, "##### CAR SERVICES")
+
         return newCar
     }
 

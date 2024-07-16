@@ -1,4 +1,5 @@
 export const userIdMock = "15da97a-57de-45aa-8196-174a04b92a39"
+export const userIdMockNonExisting = "15da97a-57de-45aa-8195-174a04b92a39"
 
 export const carMock = {
     id: "5fa686d3-ea78-4db9-8689-06e157090234",

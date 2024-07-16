@@ -31,7 +31,6 @@ export class UserServices {
 
         const { password, ...userWithoutPassword } = user;
 
-        console.log(userWithoutPassword)
 
         return userWithoutPassword
     }
@@ -59,6 +58,8 @@ export class UserServices {
         const accessToken = jwt.sign({}, secret, {
             expiresIn: "1h"
         })
+
+        console.log({ accessToken, user })
 
         return { accessToken, user }
     }

@@ -11,7 +11,6 @@ describe("Unit test: Get All Users", () => {
         prismaMock.user.findMany.mockResolvedValue(usersListMock);
 
         const data = await userServices.getUsers()
-
         
         expect(data).toHaveLength(2)
     })

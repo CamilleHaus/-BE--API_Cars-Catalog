@@ -1,11 +1,17 @@
 import { prisma } from "../../database/prisma";
 import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
 
-export const userMock = {
-    id: "15da97a-57de-45aa-8196-174a04b92a39",
-    name: "Camille",
-    email: "a@mail.com",
-    password: "1234"
+export const userMock = async () => {
+
+    const hashedPassword = await bcrypt.hash("1234", 10)
+
+    return {
+        id: "15da97a-57de-45aa-8196-174a04b92a39",
+        name: "Camille",
+        email: "a@mail.com",
+        password: hashedPassword
+    }
 }
 
 export const createUserMock = {
@@ -19,18 +25,24 @@ export const loginUserMock = {
     password: "1234"
 }
 
-export const usersListMock = [
-    {
+export const returnUserBodyMock = {
     id: "15da97a-57de-45aa-8196-174a04b92a39",
     name: "Camille",
-    email: "a@mail.com",
-    password: "1234"
+    email: "a@mail.com"
+}
+
+export const usersListMock = [
+    {
+        id: "15da97a-57de-45aa-8196-174a04b92a39",
+        name: "Camille",
+        email: "a@mail.com",
+        password: "1234"
     },
     {
-    id: "17da97a-57de-45aa-8196-174a04b92a39",
-    name: "Camille",
-    email: "234@mail.com",
-    password: "1234"
+        id: "17da97a-57de-45aa-8196-174a04b92a39",
+        name: "Camille",
+        email: "234@mail.com",
+        password: "1234"
     }
 ]
 
