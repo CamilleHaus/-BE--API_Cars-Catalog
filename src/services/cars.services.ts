@@ -8,7 +8,7 @@ import { AppError } from "../erros/AppError";
 @injectable()
 export class CarServices {
 
-    async createCar(body: TCreateCar, userId: string): Promise<TCarSchema> {
+    async createCar(body: TCreateCar, userId: string): Promise<TCarSchema | undefined> {
 
         const newCar = await prisma.car.create({
             data: {
@@ -16,7 +16,7 @@ export class CarServices {
                 userId
             }
         })
-
+        console.log(newCar, "##### CAR SERVICES")
         return newCar
     }
 
@@ -64,7 +64,7 @@ export class CarServices {
             where: { id: carId },
             data: {
                 ...body,
-                userId: existingCar.userId
+                userId: userId
             }
         });
 

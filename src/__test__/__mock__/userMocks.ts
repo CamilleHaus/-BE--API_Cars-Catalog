@@ -19,6 +19,21 @@ export const loginUserMock = {
     password: "1234"
 }
 
+export const usersListMock = [
+    {
+    id: "15da97a-57de-45aa-8196-174a04b92a39",
+    name: "Camille",
+    email: "a@mail.com",
+    password: "1234"
+    },
+    {
+    id: "17da97a-57de-45aa-8196-174a04b92a39",
+    name: "Camille",
+    email: "234@mail.com",
+    password: "1234"
+    }
+]
+
 export const returnUserMock = {
     accessToken: "15da86a-57de-45aa-8196-174a04b92a39",
     user: {

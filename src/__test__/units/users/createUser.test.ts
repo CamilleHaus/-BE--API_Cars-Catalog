@@ -19,7 +19,7 @@ describe("Unit test: Create a User", () => {
         prismaMock.user.create.mockResolvedValue(returnedUserMock);
 
         const data = await userServices.createUser(createUserMock);
-
+        
         const { password: _, ...expectedUserWithoutPassword } = returnedUserMock;
 
         expect(data).toEqual(expectedUserWithoutPassword);
