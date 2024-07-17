@@ -25,6 +25,23 @@ export const loginUserMock = {
     password: "1234"
 }
 
+export const notFoundUserMock = {
+    email: "ab@mail.com",
+    password: "1234"
+}
+
+export const wrongPasswordMock = {
+    email: "a@mail.com",
+    password: "12345"
+}
+
+export const completeUserMock = {
+    id: "15da97a-57de-45aa-8196-174a04b92a39",
+        name: "Camille",
+        email: "a@mail.com",
+        password: "1234"
+}
+
 export const returnUserBodyMock = {
     id: "15da97a-57de-45aa-8196-174a04b92a39",
     name: "Camille",
@@ -46,6 +63,19 @@ export const usersListMock = [
     }
 ]
 
+export const usersListMockWithoutPassword = [
+    {
+        id: "15da97a-57de-45aa-8196-174a04b92a39",
+        name: "Camille",
+        email: "a@mail.com",
+    },
+    {
+        id: "17da97a-57de-45aa-8196-174a04b92a39",
+        name: "Camille",
+        email: "234@mail.com"
+    }
+]
+
 export const returnUserMock = {
     accessToken: "15da86a-57de-45aa-8196-174a04b92a39",
     user: {
@@ -56,9 +86,22 @@ export const returnUserMock = {
 }
 
 export const loginUserFunctionMock = async () => {
-    const user = await prisma.user.create({ data: createUserMock });
+    const findUser = await prisma.user.findFirst({
+        where: {
+            email: createUserMock.email
+        }
+    })
 
-    const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string);
+    if (!findUser) {
+        const user = await prisma.user.create({ data: createUserMock });
 
-    return { user, accessToken };
+        const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string);
+
+        return { user, accessToken };
+    }
+
+    const accessToken = jwt.sign({ id: findUser.id }, process.env.JWT_SECRET as string);
+
+        return { findUser, accessToken };
+
 }

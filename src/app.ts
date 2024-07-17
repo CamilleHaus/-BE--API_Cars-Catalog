@@ -3,7 +3,7 @@ import "express-async-errors";
 import express, { json } from "express";
 import { carRouter } from "./routes/car.routes";
 import { HandleErros } from "./middlewares/handleErrors";
-import { userRouter } from "./routes/users.route";
+import { userRouter } from "./routes/users.routes";
 
 export const app = express();
 

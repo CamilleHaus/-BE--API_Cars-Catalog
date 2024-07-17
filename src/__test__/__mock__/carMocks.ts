@@ -1,5 +1,11 @@
+import { prisma } from "../../database/prisma"
+import { createUserMock } from "./userMocks"
+import jwt from "jsonwebtoken"
+
 export const userIdMock = "15da97a-57de-45aa-8196-174a04b92a39"
 export const userIdMockNonExisting = "15da97a-57de-45aa-8195-174a04b92a39"
+
+export const tockenMock = "15da86a-57de-45aa-8196-174a04b92a34343w5w4"
 
 export const carMock = {
     id: "5fa686d3-ea78-4db9-8689-06e157090234",
@@ -51,4 +57,5 @@ export const carListMock = [
     km: 80.000,
     userId: "15da97a-57de-45aa-8195-174a04b92a39"
     }
+
 ]

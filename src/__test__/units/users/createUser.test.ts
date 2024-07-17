@@ -31,6 +31,3 @@ describe("Unit test: Create a User", () => {
     })
 });
 
-// Nesse teste, como lidamos com senhas, simulamos da mesma forma o hasheamento da senha pelo bcrypt e colocamos no usuário passado para o Mock.
-// Depois, criamos o usuário no prisma e retiramos a senha do usuário criado pelo Mock.
-// Por fim, comparamos o data com o usuário criado sem a senha

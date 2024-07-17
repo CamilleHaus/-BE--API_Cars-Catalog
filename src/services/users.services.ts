@@ -59,9 +59,9 @@ export class UserServices {
             expiresIn: "1h"
         })
 
-        console.log({ accessToken, user })
+        const userWithoutPassword = returnSchema.parse(user)
 
-        return { accessToken, user }
+        return { accessToken, user: userWithoutPassword }
     }
 
     async getUsers(): Promise<TReturn[]> {

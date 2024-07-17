@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { UserServices } from "../../../services/users.services";
 import { prismaMock } from "../../__mock__/prisma";
-import { createUserMock, loginUserFunctionMock, loginUserMock, returnUserBodyMock, returnUserMock, userMock } from "../../__mock__/userMocks";
-import bcrypt from "bcrypt";
+import { completeUserMock, loginUserMock, notFoundUserMock, returnUserMock, userMock, wrongPasswordMock } from "../../__mock__/userMocks";
+import { notEmpty } from "jest-mock-extended";
 
 describe("Unit test: Login User", () => {
 
@@ -15,10 +15,32 @@ describe("Unit test: Login User", () => {
 
         const data = await userServices.login(loginUserMock)
 
-        console.log(data.user, "DATA #########")
-        console.log(returnUserMock.user, "RETURN USER MOCK #########")
-
         expect(data.accessToken).toBeDefined();
-        expect(data.user).toBe(returnUserMock.user)
+        expect(data.user).toStrictEqual(returnUserMock.user)
+    })
+
+
+    test("Should throw an error if user does not exist", async () => {
+        const userServices = new UserServices();
+
+        const login = async () => await userServices.login(loginUserMock)
+
+        expect(login()).rejects.toThrow("User not registered")
+
+        // Nesse teste não é necessário mockar o prisma pois não vamos achar nenhum resultado final de usuário
+    })
+
+    test("Should throw an error if credentials do not match", async () => {
+        const userServices = new UserServices();
+        
+        const completeUser = await userMock()
+
+        prismaMock.user.findFirst.mockResolvedValue(completeUser);
+
+        const loginAttempt = async() => await userServices.login(wrongPasswordMock)
+
+        await expect(loginAttempt()).rejects.toThrow("E-mail and password doesn't match")
+
+        // Nesse teste, simulamos do mesmo jeito do login, porém fornecemos um MOCK com uma senha errada
     })
 })

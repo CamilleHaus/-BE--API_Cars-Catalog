@@ -11,7 +11,7 @@ export class CarController {
         const userId = res.locals.decode.id
 
         const response = await this.carServices.createCar(req.body, userId)
-
+ 
         return res.status(201).json(response)
     }
 
