@@ -28,7 +28,9 @@ describe("Integration test: Create car", () => {
     })
 
     test("Should throw an error when body is not valid", async () => {
-        await request.post("/cars").send(incompleteCarMock).expect(400)
+        const { accessToken } = await loginUserFunctionMock()
+
+        await request.post("/cars").set('Authorization', `Bearer ${accessToken}`).send(incompleteCarMock).expect(400)
 
     })
 })

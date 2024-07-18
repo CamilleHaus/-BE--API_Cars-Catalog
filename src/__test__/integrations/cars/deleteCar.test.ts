@@ -1,6 +1,7 @@
 import { prisma } from "../../../database/prisma";
 import { request } from "../../../utils/request";
 import { carCreateMock } from "../../__mock__/carMocks";
+import { loginUserFunctionMock } from "../../__mock__/userMocks";
 
 describe("Integration test: Delete Car", () => {
 
@@ -9,10 +10,12 @@ describe("Integration test: Delete Car", () => {
     });
 
     test("Should be able to delete a car successfully", async () => {
-        const newCar = await prisma.car.create({ data: carCreateMock})
+        const { accessToken } = await loginUserFunctionMock()
 
-        await request.delete(`/cars/${newCar.id}`).expect(204)
-        
+        const data = await request.post("/cars").send(carCreateMock).set('Authorization', `Bearer ${accessToken}`).expect(201).then((response) => response.body)
+
+        await request.delete(`/cars/${data.id}`).set('Authorization', `Bearer ${accessToken}`).expect(204)
+
     })
 
     test("Should throw an error when car ID invalid", async () => {

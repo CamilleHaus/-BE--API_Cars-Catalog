@@ -9,9 +9,9 @@ describe("Integration test: Get All Cars", () => {
     });
 
     test("Should be able to get all cars successfully", async () => {
-        await prisma.car.createMany({ data: carListMock})
+        const carsList = await prisma.car.createMany({ data: carListMock})
 
-        const data = await request.get("/cars").expect(200).then((response) => response.body)
+        const data = await request.get(`/cars/`).send(userId).expect(200).then((response) => response.body)
         
         expect(data).toHaveLength(2)
 

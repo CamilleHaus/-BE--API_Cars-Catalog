@@ -14,6 +14,16 @@ export const userMock = async () => {
     }
 }
 
+export const loginMockUser = async () => {
+    const data = await userMock()
+
+    const user = await prisma.user.create({ data });
+
+        const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string);
+
+        return { user, accessToken };
+}
+
 export const createUserMock = {
     name: "Camille",
     email: "a@mail.com",
@@ -33,6 +43,11 @@ export const notFoundUserMock = {
 export const wrongPasswordMock = {
     email: "a@mail.com",
     password: "12345"
+}
+
+export const invalidLoginTypeMock = {
+    email: 123,
+    password: 12345
 }
 
 export const completeUserMock = {

@@ -22,19 +22,19 @@ describe("Integration test: Register User", () => {
     test("Should throw error when email is already registered", async () => {
         await prisma.user.create({ data: createUserMock})
 
-        const data = await request.post("/users").send(createUserMock).expect(403).then((response) => response.body)
+        const data = await request.post("/users").send(createUserMock).expect(409).then((response) => response.body)
         
         expect(data.message).toBe("E-mail already registered")
     })
 
     test("Should thrown an error when body parameter is missing", async () => {
 
-        const data = await request.post("/users").expect(409)
+        const data = await request.post("/users").expect(400)
         .then((response) => response.body)
 
-        expect(data.issues).toHaveLength(3)
-        expect(data.issues[0].message).toBe("Required")
-        expect(data.issues[1].message).toBe("Required")
-        expect(data.issues[2].message).toBe("Required")
+        expect(data.errors).toHaveLength(3)
+        expect(data.errors[0].message).toBe("Required")
+        expect(data.errors[1].message).toBe("Required")
+        expect(data.errors[2].message).toBe("Required")
     })
 })

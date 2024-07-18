@@ -11,8 +11,6 @@ export class UsersControllers {
 
         const response = await this.userServices.createUser(req.body)
 
-        console.log(response)
-
         return res.status(201).json(response)
     }
 

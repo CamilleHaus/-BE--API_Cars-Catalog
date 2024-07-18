@@ -1,15 +1,23 @@
 import { prisma } from "../../../database/prisma";
 import { request } from "../../../utils/request";
 import { carCreateMock, userIdMock } from "../../__mock__/carMocks";
+import { createUserMock } from "../../__mock__/userMocks";
 
 describe("Integration test: Get One Car", () => {
 
     beforeEach(async () => {
-        await prisma.$transaction([prisma.car.deleteMany()])
+        await prisma.$transaction([prisma.car.deleteMany(), prisma.user.deleteMany()])
     });
 
     test("Should be able to get one car successfully", async () => {
-        const newCar = await prisma.car.create({ data: carCreateMock })
+        const user = await prisma.user.create({ data: createUserMock})
+
+        const carWithUserId = {
+            ...carCreateMock,
+            userId: user.id
+        };
+        
+        const newCar = await prisma.car.create({ data: carWithUserId })
 
         const data = await request.get(`/cars/${newCar.id}`).expect(200).then((response) => response.body)
         
