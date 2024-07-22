@@ -16,4 +16,4 @@ export const userRouter = Router();
 
 userRouter.post("/", ValidateBody.execute(createUserSchema), (req, res) => usersControllers.createUser(req, res))
 userRouter.post("/login", ValidateBody.execute(userLoginSchema), (req, res) => usersControllers.login(req, res))
-userRouter.get("/", VerifyUser.execute, VerifyToken.execute, (req, res) => usersControllers.getUsers(req, res))
+userRouter.get("/", VerifyToken.execute, VerifyUser.execute, (req, res) => usersControllers.getUsers(req, res))

@@ -55,7 +55,7 @@ export class UserServices {
 
         const secret = process.env.JWT_SECRET as string
 
-        const accessToken = jwt.sign({}, secret, {
+        const accessToken = jwt.sign({ id: user.id }, secret, {
             expiresIn: "1h"
         })
 

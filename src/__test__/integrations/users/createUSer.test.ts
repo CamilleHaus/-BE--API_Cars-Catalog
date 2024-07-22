@@ -5,7 +5,7 @@ import { createUserMock } from "../../__mock__/userMocks"
 describe("Integration test: Register User", () => {
 
     beforeEach(async () => {
-        await prisma.$transaction([prisma.user.deleteMany()])
+        await prisma.$transaction([prisma.car.deleteMany(), prisma.user.deleteMany()])
     });
 
     test("Should be able to register a user successfully", async () => {
