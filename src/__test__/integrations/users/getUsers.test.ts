@@ -17,8 +17,6 @@ describe("Integration test: Get All Users", () => {
             user.password = await bcrypt.hash(user.password, 10);
         }
 
-        console.log(userData, "##### USER DATA ")
-
         await prisma.user.createMany({ data: userData })
 
         const data = await request.get("/users").then((response) => response.body)
