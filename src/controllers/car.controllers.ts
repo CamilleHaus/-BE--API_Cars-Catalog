@@ -4,48 +4,45 @@ import { Request, Response } from "express";
 
 @injectable()
 export class CarController {
-    constructor(@inject("CarServices") private carServices: CarServices) { }
+  constructor(@inject("CarServices") private carServices: CarServices) {}
 
-    async createCar(req: Request, res: Response): Promise<Response> {
+  async createCar(req: Request, res: Response): Promise<Response> {
+    const userId = res.locals.decode.id;
 
-        const userId = res.locals.decode.id
+    const response = await this.carServices.createCar(req.body, userId);
 
-        const response = await this.carServices.createCar(req.body, userId)
- 
-        return res.status(201).json(response)
-    }
+    return res.status(201).json(response);
+  }
 
-    async getManyCars(req: Request, res: Response): Promise<Response> {
+  async getManyCars(req: Request, res: Response): Promise<Response> {
+    const response = await this.carServices.getManyCars();
 
-        const response = await this.carServices.getManyCars()
+    return res.status(200).json(response);
+  }
 
-        return res.status(200).json(response)
+  async getOneCar(req: Request, res: Response): Promise<Response> {
+    const response = await this.carServices.getOneCar(req.params.id);
 
-    }
+    return res.status(200).json(response);
+  }
 
-    async getOneCar(req: Request, res: Response): Promise<Response> {
+  async updateCar(req: Request, res: Response): Promise<Response> {
+    const userId = res.locals.decode.id;
 
-        const response = await this.carServices.getOneCar(req.params.id)
+    const response = await this.carServices.updateCar(
+      req.params.id,
+      req.body,
+      userId
+    );
 
-        return res.status(200).json(response)
+    return res.status(200).json(response);
+  }
 
-    }
+  async deleteCars(req: Request, res: Response): Promise<Response> {
+    const userId = res.locals.decode.id;
 
-    async updateCar(req: Request, res: Response): Promise<Response> {
+    await this.carServices.deleteCars(req.params.id, userId);
 
-        const userId = res.locals.decode.id
-
-        const response = await this.carServices.updateCar(req.params.id, req.body, userId)
-
-        return res.status(200).json(response)
-    }
-
-    async deleteCars(req: Request, res: Response): Promise<Response> {
-
-        const userId = res.locals.decode.id
-
-        await this.carServices.deleteCars(req.params.id, userId)
-
-        return res.status(204).json()
-    }
+    return res.status(204).json();
+  }
 }

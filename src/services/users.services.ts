@@ -1,80 +1,80 @@
 import { injectable } from "tsyringe";
 import { prisma } from "../database/prisma";
-import { TCreateUser, TReturn, TUserLogin, TUserLoginReturn, returnSchema } from "../schemas/user.schemas";
+import {
+  TCreateUser,
+  TReturn,
+  TUserLogin,
+  TUserLoginReturn,
+  returnSchema,
+} from "../schemas/user.schemas";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { AppError } from "../erros/AppError";
 
 @injectable()
 export class UserServices {
+  async createUser(body: TCreateUser): Promise<TReturn> {
+    const hashedPassowrd = await bcrypt.hash(body.password, 10);
 
-    async createUser(body: TCreateUser): Promise<TReturn> {
+    const newUser = {
+      ...body,
+      password: hashedPassowrd,
+    };
 
-        const hashedPassowrd = await bcrypt.hash(body.password, 10)
- 
-        const newUser = {
-            ...body,
-            password: hashedPassowrd
-        }
+    const checkUser = await prisma.user.findFirst({
+      where: { email: body.email },
+    });
 
-        const checkUser = await prisma.user.findFirst({
-            where: { email: body.email }
-        })
-
-        if (checkUser) {
-            throw new AppError(409, "E-mail already registered")
-        }
-
-        const user = await prisma.user.create({
-            data: newUser
-        })
-
-        const { password, ...userWithoutPassword } = user;
-
-
-        return userWithoutPassword
+    if (checkUser) {
+      throw new AppError(409, "E-mail already registered");
     }
 
-    async login(body: TUserLogin): Promise<TUserLoginReturn> {
+    const user = await prisma.user.create({
+      data: newUser,
+    });
 
-        const user = await prisma.user.findFirst({
-            where: {
-                email: body.email
-            }
-        })
+    const { password, ...userWithoutPassword } = user;
 
-        if (!user) {
-            throw new AppError(404, "User not registered")
-        }
+    return userWithoutPassword;
+  }
 
-        const isPasswordValid = await bcrypt.compare(body.password, user!.password)
+  async login(body: TUserLogin): Promise<TUserLoginReturn> {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: body.email,
+      },
+    });
 
-        if (!isPasswordValid) {
-            throw new AppError(401, "E-mail and password doesn't match")
-        }
-
-        const secret = process.env.JWT_SECRET as string
-
-        const accessToken = jwt.sign({ id: user.id }, secret, {
-            expiresIn: "1h"
-        })
-
-        const userWithoutPassword = returnSchema.parse(user)
-
-        return { accessToken, user: userWithoutPassword }
+    if (!user) {
+      throw new AppError(404, "User not registered");
     }
 
-    async getUsers(): Promise<TReturn[]> {
+    const isPasswordValid = await bcrypt.compare(body.password, user!.password);
 
-        const allUsers = await prisma.user.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true
-            }
-        })
-
-        return allUsers
-
+    if (!isPasswordValid) {
+      throw new AppError(401, "E-mail and password doesn't match");
     }
+
+    const secret = process.env.JWT_SECRET as string;
+
+    const accessToken = jwt.sign({ id: user.id }, secret, {
+      expiresIn: "1h",
+    });
+
+    const userWithoutPassword = returnSchema.parse(user);
+
+    return { accessToken, user: userWithoutPassword };
+  }
+
+  async getUsers(): Promise<TReturn[]> {
+    const allUsers = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+
+    return allUsers;
+  }
 }

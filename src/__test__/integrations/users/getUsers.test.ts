@@ -35,7 +35,6 @@ describe("Integration test: Get All Users", () => {
   });
 
   test("Should throw error when token is missing", async () => {
-
     const data = await request
       .get("/users")
       .expect(401)

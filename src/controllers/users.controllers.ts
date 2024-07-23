@@ -4,27 +4,23 @@ import { Request, Response } from "express";
 
 @injectable()
 export class UsersControllers {
+  constructor(@inject("UserServices") private userServices: UserServices) {}
 
-    constructor(@inject("UserServices") private userServices: UserServices) { }
+  async createUser(req: Request, res: Response): Promise<Response> {
+    const response = await this.userServices.createUser(req.body);
 
-    async createUser(req: Request, res: Response): Promise<Response> {
+    return res.status(201).json(response);
+  }
 
-        const response = await this.userServices.createUser(req.body)
+  async login(req: Request, res: Response): Promise<Response> {
+    const response = await this.userServices.login(req.body);
 
-        return res.status(201).json(response)
-    }
+    return res.status(200).json(response);
+  }
 
-    async login(req: Request, res: Response): Promise<Response> {
+  async getUsers(req: Request, res: Response): Promise<Response> {
+    const response = await this.userServices.getUsers();
 
-        const response = await this.userServices.login(req.body);
-
-        return res.status(200).json(response)
-    }
-
-    async getUsers(req: Request, res: Response): Promise<Response> {
-
-        const response = await this.userServices.getUsers()
-
-        return res.status(200).json(response)
-    }
+    return res.status(200).json(response);
+  }
 }
