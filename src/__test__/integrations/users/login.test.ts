@@ -6,7 +6,7 @@ import { invalidLoginTypeMock, loginMockUser, loginUserMock, userMock, wrongPass
 describe("Integration test: Login User", () => {
 
     beforeEach(async () => {
-        await prisma.$transaction([prisma.user.deleteMany()])
+        await prisma.$transaction([prisma.car.deleteMany(), prisma.user.deleteMany()])
     });
 
     test("Should be able to login successfully", async () => {
