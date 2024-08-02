@@ -1,0 +1,35 @@
+components: 
+  responses: 
+    BadRequest:
+      description: Mal formed request
+      content: 
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ZodError" 
+  schemas:
+    ZodError: 
+      type: object
+      properties:
+        errors: 
+          type: array
+          items:               
+            type: object
+            properties: 
+              code:
+                type: string
+                example: invalid_type
+              expected:
+                type: string                  
+                example: string
+              received:                    
+                type: string
+                example: undefined
+              path:
+                type: array
+                items: 
+                  type: string
+                  example: field_name_path                
+              message:
+                type: string
+                example: Required
+
