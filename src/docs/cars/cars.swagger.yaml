@@ -1,0 +1,96 @@
+paths: 
+  /cars: 
+    get:
+      tags:
+        - Cars
+      summary: Get all cars
+      description: List all cars
+      responses:
+        200: 
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items: 
+                    $ref: "#/components/schemas/Cars"
+    post:
+      tags:
+        - Cars
+      summary: Create a car
+      description: Create a car
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/Cars"
+      responses:
+        201: 
+          description: CREATED
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Cars"
+        # 400:
+        #   $ref: "#/components/responses/BadRequest"
+  /cars/{id}: 
+    get:
+      tags:
+        - Cars
+      summary: Get one car
+      description: Get a car based on its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the car to retrieve
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cars"
+    patch:
+      tags:
+        - Cars
+      summary: Update a car
+      description: Update an existing car based on its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the car to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CarsUpdate"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cars"
+    delete:
+      tags:
+        - Cars
+      summary: Delete a car
+      description: Delete a car based on its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the car to delete
+      responses:
+        204:
+          description: No Content

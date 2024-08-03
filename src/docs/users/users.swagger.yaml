@@ -1,0 +1,59 @@
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: List all users
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ReturnUser"
+    post:
+      tags:
+        - Users
+      summary: Create a user
+      description: Create a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUser"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReturnUser"
+        # 400:
+        #   $ref: "#/components/responses/BadRequest"
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Login
+      description: Login user to the platform
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogin"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLoginReturn"
+        # 400:
+        #   $ref: "#/components/responses/BadRequest"
+          
+       

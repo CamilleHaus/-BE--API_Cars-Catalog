@@ -1,0 +1,88 @@
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - password
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: "70efb524-7bde-4e54-4a8d-290cf4da9db0"
+        name:
+          type: string
+          minLength: 1
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+          example: "password123"
+    CreateUser:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+          example: "password123"
+    ReturnUser:
+      type: object
+      required:
+        - id
+        - name
+        - email
+      properties:
+        id:
+          type: string
+          readOnly: true
+          example: "70efb524-7bde-4e54-4a8d-290cf4da9db0"
+        name:
+          type: string
+          minLength: 1
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+    UserLogin:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        password:
+          type: string
+          minLength: 1
+          example: "password123"
+    UserLoginReturn:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        user:
+          $ref: "#/components/schemas/ReturnUser"

@@ -1,6 +1,6 @@
 components: 
   schemas: 
-    Cars: 
+    CarsUpdate: 
       type: object
       required: 
         - name
@@ -16,7 +16,7 @@ components:
         name: 
           type: string
           minLength: 1
-          description: Required
+          description: Optional
           example: Toyota Etios
         description: 
           type: string
@@ -25,31 +25,18 @@ components:
         brand: 
           type: string
           minLength: 1
-          description: Required
+          description: Optional
           example: Toyota
         year: 
           type: number
-          description: Required
+          description: Optional
           example: 2023
         km: 
           type: number
-          description: Required
+          description: Optional
           example: 2023
         userId: 
           readOnly: true
           type: string
           description: Required. Id of the user the car is associate with.
           example: 70efb524-7bde-4e54-4a8d-290cf4da9db0
-
-
-
-
-
-
-# id: z.string(),
-#   name: z.string().min(1),
-#   description: z.string().nullish(),
-#   brand: z.string().min(1),
-#   year: z.number().positive(),
-#   km: z.number().positive(),
-#   userId: z.string(),

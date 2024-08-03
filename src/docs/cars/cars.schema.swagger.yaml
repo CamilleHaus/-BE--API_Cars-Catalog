@@ -1,0 +1,43 @@
+components: 
+  schemas: 
+    Cars: 
+      type: object
+      required: 
+        - name
+        - description
+        - brand
+        - year
+        - km
+      properties:
+        id: 
+          readOnly: true
+          type: integer
+          example: 90efb524-4bde-4e54-8a8d-290cf4da9db0
+        name: 
+          type: string
+          minLength: 1
+          description: Required
+          example: Toyota Etios
+        description: 
+          type: string
+          description: Optional. String, default is null
+          example: Brand new car
+        brand: 
+          type: string
+          minLength: 1
+          description: Required
+          example: Toyota
+        year: 
+          type: number
+          description: Required
+          example: 2023
+        km: 
+          type: number
+          description: Required
+          example: 2023
+        userId: 
+          readOnly: true
+          type: string
+          description: Required. Id of the user the car is associate with.
+          example: 70efb524-7bde-4e54-4a8d-290cf4da9db0
+
